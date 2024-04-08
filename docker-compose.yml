@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  primary-postgres:
+    image: postgres:latest
+    restart: always
+    container_name: primary-postgres
+    environment:      
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgresdb
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"  
+    volumes:
+      - /tmp/primary-postgres:/var/lib/postgresql/data
+      - ./primary-postgres/config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./primary-postgres/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+  
+  secondary-postgres:
+    image: postgres:latest
+    restart: always
+    container_name: secondary-postgres
+    environment:      
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgresdb
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - /tmp/secondary-postgres:/var/lib/postgresql/data
