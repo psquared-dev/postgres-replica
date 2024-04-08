@@ -11,3 +11,8 @@ Check the loaded config file:
 `SHOW hba_file;`
 
 `SHOW config_file;`           
+
+
+Check for connection:
+
+`select * from pg_stat_replication;`
